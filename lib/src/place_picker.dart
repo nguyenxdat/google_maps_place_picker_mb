@@ -77,6 +77,7 @@ class PlacePicker extends StatefulWidget {
     this.onMapTypeChanged,
     this.zoomGesturesEnabled = true,
     this.zoomControlsEnabled = false,
+    this.showSearchBar = true,
   }) : super(key: key);
 
   final String apiKey;
@@ -110,6 +111,7 @@ class PlacePicker extends StatefulWidget {
   final List<Component>? autocompleteComponents;
   final bool? strictbounds;
   final String? region;
+  final bool showSearchBar;
 
   /// If set the picker can only pick addresses in the given circle area.
   /// The section will be highlighted.
@@ -298,7 +300,7 @@ class _PlacePickerState extends State<PlacePicker> {
                     key: ValueKey<int>(provider.hashCode),
                     resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
                     extendBodyBehindAppBar: true,
-                    appBar: AppBar(
+                    appBar: widget.showSearchBar ? AppBar(
                       key: appBarKey,
                       automaticallyImplyLeading: false,
                       iconTheme: Theme.of(context).iconTheme,
@@ -306,7 +308,7 @@ class _PlacePickerState extends State<PlacePicker> {
                       backgroundColor: Colors.transparent,
                       titleSpacing: 0.0,
                       title: _buildSearchBar(context),
-                    ),
+                    ) : null,
                     body: _buildMapWithLocation(),
                   ),
                   _buildIntroModal(context),
