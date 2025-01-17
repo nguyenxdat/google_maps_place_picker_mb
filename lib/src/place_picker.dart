@@ -515,7 +515,7 @@ class _PlacePickerState extends State<PlacePicker> {
       onCameraIdle: widget.onCameraIdle,
       zoomGesturesEnabled: widget.zoomGesturesEnabled,
       zoomControlsEnabled: widget.zoomControlsEnabled,
-      onSearchChanged: onSearchChanged,
+      onSearchChanged: widget.onSearchChanged,
     );
   }
 
