@@ -78,6 +78,7 @@ class PlacePicker extends StatefulWidget {
     this.zoomGesturesEnabled = true,
     this.zoomControlsEnabled = false,
     this.showSearchBar = true,
+    this.onSearchChanged,
   }) : super(key: key);
 
   final String apiKey;
@@ -112,6 +113,7 @@ class PlacePicker extends StatefulWidget {
   final bool? strictbounds;
   final String? region;
   final bool showSearchBar;
+  final ValueChanged<PickResult>? onSearchChanged;
 
   /// If set the picker can only pick addresses in the given circle area.
   /// The section will be highlighted.
@@ -513,6 +515,7 @@ class _PlacePickerState extends State<PlacePicker> {
       onCameraIdle: widget.onCameraIdle,
       zoomGesturesEnabled: widget.zoomGesturesEnabled,
       zoomControlsEnabled: widget.zoomControlsEnabled,
+      onSearchChanged: onSearchChanged,
     );
   }
 

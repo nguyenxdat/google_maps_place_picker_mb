@@ -58,6 +58,7 @@ class GoogleMapPlacePicker extends StatelessWidget {
     this.zoomGesturesEnabled = true,
     this.zoomControlsEnabled = false,
     this.fullMotion = false,
+    this.onSearchChanged,
   }) : super(key: key);
 
   final LatLng initialTarget;
@@ -72,6 +73,7 @@ class GoogleMapPlacePicker extends StatelessWidget {
   final VoidCallback? onToggleMapType;
   final VoidCallback? onMyLocation;
   final ValueChanged<PickResult>? onPlacePicked;
+  final ValueChanged<PickResult>? onSearchChanged;
 
   final int? debounceMilliseconds;
   final bool? enableMapTypeButton;
@@ -159,12 +161,18 @@ class GoogleMapPlacePicker extends StatelessWidget {
         provider.placeSearchingState = SearchingState.Idle;
         return;
       }
-
-      provider.selectedPlace =
+      final pickResult =
           PickResult.fromPlaceDetailResult(detailResponse.result);
+      provider.selectedPlace = pickResult;
+      if (onSearchChanged != null) {
+        onSearchChanged!(pickResult);
+      }
     } else {
-      provider.selectedPlace =
-          PickResult.fromGeocodingResult(response.results[0]);
+      final pickResult = PickResult.fromGeocodingResult(response.results[0]);
+      provider.selectedPlace = pickResult;
+      if (onSearchChanged != null) {
+        onSearchChanged!(pickResult);
+      }
     }
 
     provider.placeSearchingState = SearchingState.Idle;
