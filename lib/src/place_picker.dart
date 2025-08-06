@@ -255,6 +255,16 @@ class _PlacePickerState extends State<PlacePicker> {
   }
 
   @override
+  void didUpdateWidget(covariant PlacePicker oldWidget) {
+    if (widget.initialPosition != oldWidget.initialPosition) {
+      final latitude = widget.initialPosition.latitude;
+      final longitude = widget.initialPosition.longitude;
+      _moveTo(latitude, longitude);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     searchBarController.dispose();
 
@@ -302,15 +312,17 @@ class _PlacePickerState extends State<PlacePicker> {
                     key: ValueKey<int>(provider.hashCode),
                     resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
                     extendBodyBehindAppBar: true,
-                    appBar: widget.showSearchBar ? AppBar(
-                      key: appBarKey,
-                      automaticallyImplyLeading: false,
-                      iconTheme: Theme.of(context).iconTheme,
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      titleSpacing: 0.0,
-                      title: _buildSearchBar(context),
-                    ) : null,
+                    appBar: widget.showSearchBar
+                        ? AppBar(
+                            key: appBarKey,
+                            automaticallyImplyLeading: false,
+                            iconTheme: Theme.of(context).iconTheme,
+                            elevation: 0,
+                            backgroundColor: Colors.transparent,
+                            titleSpacing: 0.0,
+                            title: _buildSearchBar(context),
+                          )
+                        : null,
                     body: _buildMapWithLocation(),
                   ),
                   _buildIntroModal(context),
