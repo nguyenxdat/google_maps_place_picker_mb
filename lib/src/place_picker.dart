@@ -12,7 +12,6 @@ import 'package:google_maps_place_picker_mb/src/google_map_place_picker.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show Platform;
 
 import 'package:uuid/uuid.dart';
 
@@ -291,10 +290,11 @@ class _PlacePickerState extends State<PlacePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () {
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, Object? result) {
           searchBarController.clearOverlay();
-          return Future.value(true);
+          Navigator.of(context).pop();
         },
         child: FutureBuilder<PlaceProvider>(
           future: _futureProvider,

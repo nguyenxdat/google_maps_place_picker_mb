@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
@@ -84,9 +85,14 @@ class PlaceProvider extends ChangeNotifier {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
+    LocationSettings locationSettings =
+        AndroidSettings(accuracy: desiredAccuracy ?? LocationAccuracy.best);
+    if (Platform.isIOS) {
+      locationSettings =
+          AppleSettings(accuracy: desiredAccuracy ?? LocationAccuracy.best);
+    }
     _currentPosition = await Geolocator.getCurrentPosition(
-      desiredAccuracy: desiredAccuracy ?? LocationAccuracy.best,
+      locationSettings: locationSettings,
     );
   }
 
