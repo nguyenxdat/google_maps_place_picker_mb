@@ -294,7 +294,6 @@ class _PlacePickerState extends State<PlacePicker> {
         canPop: false,
         onPopInvokedWithResult: (bool didPop, Object? result) {
           searchBarController.clearOverlay();
-          Navigator.of(context).pop();
         },
         child: FutureBuilder<PlaceProvider>(
           future: _futureProvider,
