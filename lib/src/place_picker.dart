@@ -78,6 +78,7 @@ class PlacePicker extends StatefulWidget {
     this.zoomControlsEnabled = false,
     this.showSearchBar = true,
     this.onSearchChanged,
+    this.zoomLevel = 15,
   }) : super(key: key);
 
   final String apiKey;
@@ -234,6 +235,8 @@ class PlacePicker extends StatefulWidget {
 
   /// Allow user to make visible the zoom button
   final bool zoomControlsEnabled;
+
+  final double zoomLevel;
 
   @override
   _PlacePickerState createState() => _PlacePickerState();
@@ -503,6 +506,7 @@ class _PlacePickerState extends State<PlacePicker> {
           widget.onMapTypeChanged!(provider!.mapType);
         }
       },
+      zoomLevel: widget.zoomLevel,
       onMyLocation: () async {
         // Prevent to click many times in short period.
         if (provider == null) return;
